@@ -4,5 +4,6 @@ public enum GenericVerticalAdjustorKeys {
     minY,
     maxY,
     direction,
-    requireSkyLight
+    requireSkyLight,
+    forceSurface,
 }
