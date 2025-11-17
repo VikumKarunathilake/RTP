@@ -13,9 +13,9 @@
     <description>a random teleport plugin</description>
     <url>http://maven.apache.org</url>
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <java.version>11</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -108,38 +108,20 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.10.0</version>
+                <version>3.8.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.2.5</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                        <configuration>
-                            <!--suppress UnresolvedMavenProperty -->
-                            <keyname>${gpg.keyname}</keyname>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -156,7 +138,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.6.0</version> <!-- Make sure to always use the latest version (https://maven.apache.org/plugins/maven-shade-plugin/) -->
+                <version>3.6.0</version>
                 <configuration>
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
                     <relocations>
@@ -166,23 +148,23 @@
                         </relocation>
                         <relocation>
                             <pattern>io.papermc.lib</pattern>
-                            <shadedPattern>io.github.dailystruggle.rtp.paperlib</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>io.github.dailystruggle.rtp.paperlib</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>io.github.dailystruggle.commandsapi</pattern>
-                            <shadedPattern>io.github.dailystruggle.rtp.commandsapi</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>io.github.dailystruggle.rtp.commandsapi</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>io.github.dailystruggle.effectsapi</pattern>
-                            <shadedPattern>io.github.dailystruggle.rtp.effectsapi</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>io.github.dailystruggle.rtp.effectsapi</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.yaml.snakeyaml</pattern>
-                            <shadedPattern>io.github.dailystruggle.rtp.snakeyaml</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>io.github.dailystruggle.rtp.snakeyaml</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>me.carleslc.Simple-YAML</pattern>
-                            <shadedPattern>io.github.dailystruggle.rtp.Simple-Yaml</shadedPattern> <!-- Replace this -->
+                            <shadedPattern>io.github.dailystruggle.rtp.Simple-Yaml</shadedPattern>
                         </relocation>
                     </relocations>
                     <filters>
@@ -301,13 +283,18 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>11</version>
+            <version>23</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
-            <version>11</version>
+            <version>23</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -325,7 +312,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.21-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -367,7 +354,7 @@
         <dependency>
             <groupId>io.papermc</groupId>
             <artifactId>paperlib</artifactId>
-            <version>1.0.7</version>
+            <version>1.0.8</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
