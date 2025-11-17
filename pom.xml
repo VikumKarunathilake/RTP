@@ -171,56 +171,6 @@
                             <shadedPattern>io.github.dailystruggle.rtp.Simple-Yaml</shadedPattern>
                         </relocation>
                     </relocations>
-                    <filters>
-                        <filter>
-                            <artifact>io.papermc:*</artifact>
-                            <excludes>
-                                <exclude>org.jetbrains*</exclude>
-                                <exclude>plugin.yml</exclude>
-                                <exclude>*.yml</exclude>
-                                <exclude>*.xml</exclude>
-                                <exclude>*.properties</exclude>
-                                <exclude>org.yaml.snakeyaml.*</exclude>
-                                <exclude>META-INF.*</exclude>
-                                <exclude>META-INF/*</exclude>
-                                <exclude>META-INF/versions/16/</exclude>
-                                <exclude>META-INF/MANIFEST.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>io.github.dailystruggle:EffectsAPI:*</artifact>
-                            <excludes>
-                                <exclude>io.github.dailystruggle:CommandsAPI:*</exclude>
-                                <exclude>org.jetbrains*</exclude>
-                                <exclude>plugin.yml</exclude>
-                                <exclude>*.yml</exclude>
-                                <exclude>*.xml</exclude>
-                                <exclude>*.properties</exclude>
-                                <exclude>org.yaml.snakeyaml.*</exclude>
-                                <exclude>META-INF.*</exclude>
-                                <exclude>META-INF/*</exclude>
-                                <exclude>META-INF/**/*</exclude>
-                                <exclude>META-INF/versions/16/</exclude>
-                                <exclude>META-INF/MANIFEST.MF</exclude>
-                            </excludes>
-                        </filter>
-                        <filter>
-                            <artifact>io.github.dailystruggle:CommandsAPI:*</artifact>
-                            <excludes>
-                                <exclude>org.jetbrains*</exclude>
-                                <exclude>plugin.yml</exclude>
-                                <exclude>*.yml</exclude>
-                                <exclude>*.xml</exclude>
-                                <exclude>*.properties</exclude>
-                                <exclude>org.yaml.snakeyaml.*</exclude>
-                                <exclude>META-INF.*</exclude>
-                                <exclude>META-INF/*</exclude>
-                                <exclude>META-INF/**/*</exclude>
-                                <exclude>META-INF/versions/16/</exclude>
-                                <exclude>META-INF/MANIFEST.MF</exclude>
-                            </excludes>
-                        </filter>
-                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -231,6 +181,51 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <filters>
+                                <filter>
+                                    <artifact>io.papermc:*</artifact>
+                                    <excludes>
+                                        <exclude>org.jetbrains*</exclude>
+                                        <exclude>plugin.yml</exclude>
+                                        <exclude>*.yml</exclude>
+                                        <exclude>*.xml</exclude>
+                                        <exclude>*.properties</exclude>
+                                        <exclude>org.yaml.snakeyaml.*</exclude>
+                                        <exclude>META-INF.*</exclude>
+                                        <exclude>META-INF/*</exclude>
+                                        <exclude>META-INF/versions/16/</exclude>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>io.github.dailystruggle:EffectsAPI:*</artifact>
+                                    <excludes>
+                                        <exclude>io.github.dailystruggle:CommandsAPI:*</exclude>
+                                        <exclude>org.jetbrains*</exclude>
+                                        <exclude>plugin.yml</exclude>
+                                        <exclude>*.yml</exclude>
+                                        <exclude>*.xml</exclude>
+                                        <exclude>*.properties</exclude>
+                                        <exclude>org.yaml.snakeyaml.*</exclude>
+                                        <exclude>META-INF.*</exclude>
+                                        <exclude>META-INF/*</exclude>
+                                        <exclude>META-INF/**/*</exclude>
+                                        <exclude>META-INF/versions/16/</exclude>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>io.github.dailystruggle:CommandsAPI</artifact>
+                                    <excludes>
+                                        <exclude>plugin.yml</exclude>
+                                    </excludes>
+                                </filter>
+                                <filter>
+                                    <artifact>me.carleslc.Simple-YAML:Simple-Yaml</artifact>
+                                    <excludes>
+                                        <exclude>org/yaml/snakeyaml/**</exclude>
+                                        <exclude>org/simpleyaml/configuration/**</exclude>
+                                    </excludes>
+                                </filter>
                                 <filter>
                                     <artifact>*:*</artifact>
                                     <excludes>
@@ -309,16 +304,10 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.yaml</groupId>
-                    <artifactId>snakeyaml</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
