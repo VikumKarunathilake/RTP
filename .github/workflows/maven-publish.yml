@@ -1,0 +1,47 @@
+name: Build and Auto-Release
+
+on:
+  push:
+    branches:
+      - main       # Build only on main
+      # - dev      # Uncomment if you want more branches
+      # - release  # Add more here whenever you want
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with Maven
+        run: mvn -B clean package
+
+      - name: Prepare JAR for Release
+        run: |
+          mkdir release
+          cp target/*.jar release/
+          rm release/*-sources.jar || true
+          rm release/*-javadoc.jar || true
+
+      - name: Create or Update GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "untested-build"
+          name: "Latest Untested Build"
+          allow_override: true
+          make_latest: false
+          files: release/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
