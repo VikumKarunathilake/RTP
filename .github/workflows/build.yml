@@ -1,0 +1,252 @@
+name: Build and Test RTP
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  schedule:
+    # Run security scan weekly (Monday 6 AM UTC)
+    - cron: '0 6 * * 1'
+  release:
+    types: [published]
+
+env:
+  MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '21', '22' ]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java ${{ matrix.java }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.m2
+            !~/.m2/repository/io/github/dailystruggle
+          key: maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            maven-
+
+      - name: Build with Maven
+        run: mvn -B clean compile
+
+      - name: Run unit tests
+        run: mvn -B test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run integration tests
+        run: mvn -B verify -DskipUnitTests
+        if: matrix.java == '21'
+
+      - name: Code coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./target/site/jacoco/jacoco.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      - name: Package with Maven
+        run: mvn -B package -DskipTests
+        if: matrix.java == '21'
+
+      - name: Upload built JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: rtp-java-${{ matrix.java }}-jar
+          path: target/*.jar
+          retention-days: 7
+        if: matrix.java == '21'
+
+  quality:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Run SpotBugs security scan
+        run: |
+          mvn -B spotbugs:check
+        continue-on-error: true
+
+      - name: Check dependencies for vulnerabilities
+        run: |
+          mvn -B org.owasp:dependency-check-maven:check
+        continue-on-error: true
+
+      - name: Check license compliance
+        run: |
+          mvn -B org.codehaus.mojo:license-maven-plugin:download-licenses
+
+      - name: Validate POM
+        run: mvn -B validate
+
+  security-scan:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'push'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
+        with:
+          project: 'RTP'
+          path: '.'
+          format: 'HTML'
+          args: >
+            --failOnCVSS 8
+            --enableRetired
+            --out reports
+
+      - name: Upload security report
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report
+          path: reports
+          retention-days: 30
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build, quality]
+    if: github.event_name == 'release' && github.event.action == 'published'
+    
+    environment: production
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+
+      - name: Configure GPG
+        run: |
+          echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --batch --import
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Publish to Maven Central
+        run: mvn -B deploy -DskipTests
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          GPG_KEYNAME: ${{ secrets.GPG_KEY_NAME }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: target/*.jar
+          generate_release_notes: true
+
+  dependency-update:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Check for dependency updates
+        run: |
+          mvn -B versions:display-dependency-updates versions:display-plugin-updates
+
+      - name: Update dependencies (dry run)
+        run: |
+          mvn -B versions:use-latest-versions -DgenerateBackupPoms=false
+        continue-on-error: true
+
+  performance:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Build with performance profiling
+        run: |
+          mvn -B clean compile -Pprofile
+
+      - name: Run performance tests
+        run: |
+          mvn -B exec:java -Dexec.mainClass="io.github.dailystruggle.rtp.Benchmark" -Dexec.args="--quick"
+        timeout-minutes: 10
+        continue-on-error: true
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build, quality, security-scan]
+    if: always()
+    
+    steps:
+      - name: Notify on failure
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          channel: '#builds'
+          text: 'Build failed for ${{ github.repository }}'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
