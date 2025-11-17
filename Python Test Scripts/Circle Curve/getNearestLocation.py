@@ -1,3 +1,7 @@
+import utils.clients
+import utils.http_session
+import utils.transport
+import utils.session
 import matplotlib.pyplot as plt
 import numpy as np
 import math
