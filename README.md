@@ -1,45 +1,146 @@
-# RTP
-[abandoned]
+# **RTP (Random Teleport Plugin)**
 
-I'm not supporting this anymore. The public is free to do whatever they want with the software.
+<p>
 
-There are probably some bugs remaining and memory usage isn't great with an in-memory database. It's hard to pin down everything. Regardless, I hope the codebase provides a good example for optimization via mathematical modeling.
+  <!-- Build Status -->
+  <a href="https://github.com/VikumKarunathilake/RTP/actions">
+    <img src="https://github.com/VikumKarunathilake/RTP/actions/workflows/maven-publish.yml/badge.svg" alt="Build Status">
+  </a>
 
-## Overview
-A spigot plugin for random teleportation.
-https://www.spigotmc.org/resources/rtp.94812/
+  <!-- Latest Release -->
+  <a href="https://github.com/VikumKarunathilake/RTP/releases/latest">
+    <img src="https://img.shields.io/github/v/release/VikumKarunathilake/RTP?label=Latest%20Release" alt="Latest Release">
+  </a>
 
-The goal of this plugin is function over form, 
- * unique geometry to produce flat random distributions and support a learning algorithm
- * unique methods to learn from placements and avoid redundant selections, e.g. trying the same ocean thousands of times
- * region-based design, supporting any number of rtp regions per world
- * per-world and per-region configuration and teleport permissions
- * adjustment of region and world settings by command or by config file 
- * adjustment of all plugin messages, except for utility logs
- 
-## Build Instructions
-This codebase was put together in Intellij IDEA. You can open the base directory as a project, trust the sources, and build as-is with maven.
+  <!-- Downloads -->
+  <a href="https://github.com/VikumKarunathilake/RTP/releases">
+    <img src="https://img.shields.io/github/downloads/VikumKarunathilake/RTP/total?color=brightgreen&label=Downloads" alt="Total Downloads">
+  </a>
 
-more detailed instructions can be found here - https://github.com/DailyStruggle/RTP/wiki/Compiling-and-Editing 
+  <!-- License -->
+  <a href="https://github.com/VikumKarunathilake/RTP/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/VikumKarunathilake/RTP?color=blue&label=License" alt="License">
+  </a>
 
-## Shapes
-The plugin has some pretty useful shapes by default - 
+</p>
 
-circle, using an exponential distribution of 0.1, 1.0, 10.0
-![zu5gW62]( https://user-images.githubusercontent.com/28832622/210043913-fd624a9f-8bdd-45de-b877-6a5f5e3bf40a.png )
+---
 
-square, using an exponential distribution of 0.1, 1.0, 10.0
-![3mrkKh1]( https://user-images.githubusercontent.com/28832622/210043922-4d94e3d6-e829-4adc-a21a-74cce484f8e6.png )
+*A maintained fork of the original RTP plugin by DailyStruggle*
 
-circle, using a normal distribution
-![SUGBQk3]( https://user-images.githubusercontent.com/28832622/210043926-5c5013cf-032e-444c-9397-e381c17a4752.png )
+This repository is an actively maintained fork of the original **RTP** plugin created by **[DailyStruggle](https://github.com/DailyStruggle)**. Our goals are straightforward:
 
-square, using a normal distribution
-![pzu9j63]( https://user-images.githubusercontent.com/28832622/210043956-df964dde-4c70-460b-a377-ffd49a365e69.png )
+* Maintain **buildability** across environments
+* Ensure **compatibility** with modern server versions
+* Provide **regular updates** (currently targets **Paper 1.21.8**)
+* Deliver **stable, reliable releases** for the community
 
-rectangle, using a flat distribution and a rotation
-![3Yw2tBj]( https://user-images.githubusercontent.com/28832622/210043964-ca9725b8-be25-4e3c-a460-90f8b81326cb.png )
+While the original project is no longer maintained, this fork ensures RTP continues to work reliably on current Minecraft platforms.
 
-This plugin also allows arbitrary shape addition via API calls. 
+---
 
-Check the addons directory for examples on adding shapes, biome methods, claim plugin integrations, and commands
+## **Current Status**
+
+* ✅ Lightly tested on **Paper 1.21.8**
+* ✅ Compatible with **Java 21**
+* ✅ Produces fully shaded, dependency-free builds
+* ✅ Automated releases via GitHub Actions on the `main` branch
+
+---
+
+## **Original Author**
+
+Full credit for the original RTP plugin goes to:
+
+➡️ **[DailyStruggle](https://github.com/DailyStruggle)**
+
+This fork continues their work to ensure ongoing availability, stability, and usability.
+
+---
+
+## **About the Plugin**
+
+RTP is a high-performance random teleportation plugin featuring:
+
+* Mathematically consistent random distribution
+* Intelligent learning algorithms to avoid invalid areas
+* Support for **multiple RTP regions per world**
+* Highly configurable world/region/permission systems
+* Fully customizable messages
+* Extensible architecture for biomes, shapes, protections, and more
+
+This fork preserves the original core functionality while modernizing the build system and runtime environment.
+
+---
+
+## **Distribution Shapes**
+
+The plugin includes several mathematically sophisticated distribution shapes:
+
+### **Circle — Exponential Distribution (0.1, 1.0, 10.0)**
+![zu5gW62](https://user-images.githubusercontent.com/28832622/210043913-fd624a9f-8bdd-45de-b877-6a5f5e3bf40a.png)
+
+### **Square — Exponential Distribution (0.1, 1.0, 10.0)**
+![3mrkKh1](https://user-images.githubusercontent.com/28832622/210043922-4d94e3d6-e829-4adc-a21a-74cce484f8e6.png)
+
+### **Circle — Normal Distribution**
+![SUGBQk3](https://user-images.githubusercontent.com/28832622/210043926-5c5013cf-032e-444c-9397-e381c17a4752.png)
+
+### **Square — Normal Distribution**
+![pzu9j63](https://user-images.githubusercontent.com/28832622/210043956-df964dde-4c70-460b-a377-ffd49a365e69.png)
+
+### **Rectangle — Flat Distribution with Rotation**
+![3Yw2tBj](https://user-images.githubusercontent.com/28832622/210043964-ca9725b8-be25-4e3c-a460-90f8b81326cb.png)
+
+Additional shapes can be implemented through the plugin's extension API.
+
+See the `/addons` directory for examples including custom shapes, biome selection, claim plugin integration, and command extensions.
+
+---
+
+## **Building from Source**
+
+**Prerequisites:**
+* **Java 21**
+* **Maven 3.8+**
+
+**Build command:**
+```bash
+mvn clean package
+```
+
+The compiled plugin will be available at:
+```
+target/RTP-<version>.jar
+```
+
+The output is fully shaded and ready for server deployment.
+
+---
+
+## **Development**
+
+**Development Environment:**
+* **Maven** for dependency and build management
+* **GitHub Actions** for automated compilation and releases
+
+Contributions are welcome! Feel free to fork, improve, or submit pull requests following standard coding best practices.
+
+---
+
+## **Addons & Extensions**
+
+The plugin features a flexible extension system supporting:
+
+* Custom shape implementations
+* Biome selection logic
+* Land-claim plugin integration
+* Command enhancements
+
+Reference implementations and examples are available in the `/addons` directory.
+
+---
+
+## **License**
+
+This fork respects the original licensing terms and permissions of the upstream RTP project.
