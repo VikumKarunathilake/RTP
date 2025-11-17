@@ -14,7 +14,7 @@ platformDepth: 1
 #break blocks above platform to make air ( may cause lighting bugs )
 platformAirHeight: 2
 #if no solid block under player, use this
-platformMaterial: SMOOTH_STONE
+platformMaterial: GRASS_BLOCK
 
 #what materials are considered "air"
 airBlocks:
@@ -65,6 +65,43 @@ airBlocks:
   - CRIMSON_BUTTON
   - WARPED_BUTTON
   - SNOW
+  - LEAF_LITTET
+  - SHORT_DRY_GRASS
+  - SHORT_GRASS
+  - FERN
+  - WILDFLOWERS
+  - CHERRY_LEAVES
+  - CHERRY_SAPLING
+  - TORCHFLOWER
+  - PITCHER_PLANT
+  - PINK_PETALS
+  - BAMBOO_SAPLING
+  - BAMBOO
+  - SUGAR_CANE
+  - KELP
+  - KELP_PLANT
+  - SEAGRASS
+  - TALL_SEAGRASS
+  - SEA_PICKLE
+  - TURTLE_EGG
+  - SNIFFER_EGG
+  - DECORATED_POT
+  - FLOWER_POT
+  - POTTED_TORCHFLOWER
+  - POTTED_CHERRY_SAPLING
+  - SPORE_BLOSSOM
+  - AZALEA
+  - FLOWERING_AZALEA
+  - GLOW_LICHEN
+  - HANGING_ROOTS
+  - SMALL_DRIPLEAF
+  - BIG_DRIPLEAF
+  - BIG_DRIPLEAF_STEM
+  - MOSS_CARPET
+  - PALE_MOSS_CARPET
+  - PALE_HANGING_MOSS
+  - CREAKING_HEART
+  - RESIN_CLUMP
 
 #what materials, according to the bukkit api, to avoid
 unsafeBlocks:
@@ -79,6 +116,23 @@ unsafeBlocks:
   - BUBBLE_COLUMN
   - POWDER_SNOW
   - WATERLOGGED
+  - SCULK
+  - SCULK_VEIN
+  - SCULK_CATALYST
+  - SCULK_SHRIEKER
+  - SCULK_SENSOR
+  - CALIBRATED_SCULK_SENSOR
+  - REINFORCED_DEEPSLATE
+  - SUSPICIOUS_SAND
+  - SUSPICIOUS_GRAVEL
+  - TRIAL_SPAWNER
+  - VAULT
+  - HEAVY_CORE
+  - CREAKING_HEART
+  - PALE_OAK_LOG
+  - STRIPPED_PALE_OAK_LOG
+  - PALE_OAK_WOOD
+  - STRIPPED_PALE_OAK_WOOD
 
 #switch between blacklist/whitelist
 biomeWhitelist: false
@@ -100,6 +154,27 @@ biomes:
   - RIVER
   - SMALL_END_ISLANDS
   - THE_VOID
+  - CHERRY_GROVE
+  - DEEP_DARK
+  - MANGROVE_SWAMP
+  - PALE_GARDEN
+  - BAMBOO_JUNGLE
+  - SPARSE_JUNGLE
+  - WINDSWEPT_SAVANNA
+  - WINDSWEPT_GRAVELLY_HILLS
+  - WINDSWEPT_FOREST
+  - WINDSWEPT_HILLS
+  - DRIPSTONE_CAVES
+  - LUSH_CAVES
+  - MEADOW
+  - GROVE
+  - SNOWY_SLOPES
+  - FROZEN_PEAKS
+  - JAGGED_PEAKS
+  - STONY_PEAKS
+  - OLD_GROWTH_BIRCH_FOREST
+  - OLD_GROWTH_PINE_TAIGA
+  - OLD_GROWTH_SPRUCE_TAIGA
 
 
 version: "1.0"
