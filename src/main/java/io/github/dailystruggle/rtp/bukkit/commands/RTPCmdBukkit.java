@@ -66,19 +66,20 @@ public class RTPCmdBukkit extends BukkitBaseRTPCmd implements RTPCmd {
 
         addParameter( "region", regionParameter );
 
-        addParameter( "biome", new EnumParameter<>( 
-                "rtp.biome",
-                "select a world to teleport to",
-                ( sender, s ) -> {
-                    try {
-                        Biome.valueOf( s.toUpperCase() );
-                    } catch ( IllegalArgumentException badBiome ) {
-                        return false;
-                    }
-                    return sender.hasPermission( "rtp.biome.*" ) || sender.hasPermission( "rtp.biome." + s );
-                },
-                Biome.class )
-         );
+        // Temporarily commenting out biome parameter due to EnumParameter null array issue
+        // addParameter( "biome", new EnumParameter<>( 
+        //         "rtp.biome",
+        //         "select a biome to teleport to",
+        //         ( sender, s ) -> {
+        //             try {
+        //                 Biome.valueOf( s.toUpperCase() );
+        //             } catch ( IllegalArgumentException badBiome ) {
+        //                 return false;
+        //             }
+        //             return sender.hasPermission( "rtp.biome.*" ) || sender.hasPermission( "rtp.biome." + s );
+        //         },
+        //         Biome.class )
+        //  );
 
         //target player parameter
         // filter by player exists and player permission

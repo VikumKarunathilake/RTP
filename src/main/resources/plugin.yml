@@ -1,10 +1,14 @@
 name: RTP
 version: '${project.version}'
 main: io.github.dailystruggle.rtp.bukkit.RTPBukkitPlugin
-api-version: 1.21
+api-version: '1.21'
 authors: [ leaf26 ]
 description: 'a fast and flexible random teleportation plugin'
+website: https://github.com/DailyStruggle
 softdepend: [WorldGuard, WorldEdit, PlaceholderAPI, Vault, Chunky, ChunkyBorder]
+libraries:
+  - org.openjfx:javafx-controls:21
+  - org.openjfx:javafx-graphics:21
 
 commands:
   rtp:
